@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rory Henderson - Multimedia Designer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="#">
+    <!-- EmailJS CDN -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        (function() {
+            // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
+            emailjs.init('eBdL_IYvnHN6gAaC_');
+        })();
+    </script>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+
+    <div class="scene">
+        <div class="carousel"></div>
+    </div>
+
+    <div class="popup-overlay" style="display: none;">
+        <div class="popup-content">
+            <button class="close-button">×</button>
+            <h2 id="popup-title"></h2>
+            <div id="popup-content"></div>
+        </div>
+    </div>
+
+    <div class="corners">
+        <a href="https://www.instagram.com/_skrumcious_/" id="socialsdescr" target="_blank">
+            Rory Henderson<br>Multimedia Designer
+        </a>
+        <a id="contact">Contact</a>
+        <a id="scroll-hint">scroll up/down ...</a>
+        <a id="bio">bio</a>
+    </div>
+
+ 
+    <div id="bio-overlay" class="popup-overlay" style="display: none;">
+        <div class="popup-content">
+            <button class="close-button">×</button>
+            <h2>Bio</h2>
+            <div class="bio-content">
+                Rory Henderson is a multimedia designer and one-man-crew who explores unique applications of compositing within digital video and 3D. He takes inspiration from social media creatives, anime, sci-fi, and the journey between adolescent and adult life. After childhood in Australia and teenhood in China, his goal is to be borderless.
+            </div>
+        </div>
+    </div>
+
+    <!-- Your other script imports -->
+    <script type="module" src="carousel.js"></script>
+    <script type="module" src="ContactForm.js"></script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+@import url('https://rsms.me/inter/inter.css');
+
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background: #000;
+    overflow: hidden;
+    perspective: 1000px;
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIxMCIgZmlsbD0iI0U4QjA1OSIvPjwvc3ZnPg=='), auto;
+}
+
+/* Update social links positioning */
+#bio {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#contact {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+.scene {
+    position: relative;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 3000px;
+}
+
+.carousel {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1.5s cubic-bezier(0, 0, 0.2, 1);
+    /* Set a fixed size to provide a stable center point */
+    width: auto;
+    height: auto;
+    transform: rotateX(-10deg);
+}
+
+.card {
+    position: absolute;
+    width: 500px;
+    height: 400px;
+    left: 50%;
+    top: 50%;
+    transform-origin: center center;
+    transform-style: preserve-3d;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    backface-visibility: visible; 
+    
+} 
+
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Optional: Modify hover effect to maintain center rotation 
+.card:hover {
+    transform: translate(-50%, -50%) scale(1.05) translateZ(20px);
+}*/
+
+
+/* Popup Overlay - Base s */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    overflow-y: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Popup Content - Centered positioning */
+.popup-content {
+    position: relative;
+    width: 80%;
+    max-width: 90vw;
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeIn .8s;
+    /* Remove margin since we're using flexbox centering */
+    margin: 0;
+    /* Add max-height to ensure it doesn't overflow viewport */
+    max-height: 90vh;
+    overflow-y: auto;
+}
+/* Close Button */
+.close-button {
+    position:fixed;
+    top: 95px;
+    right: 45px;
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 24px;
+    cursor: pointer;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    transition: ease-in;
+}
+
+.close-button:hover {
+    transform: scale(1.1);
+}
+
+
+.popup-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height:60vh;
+}
+
+.popup-content-wrapper iframe {
+    width: 100%;
+    max-height: 500px;
+    height: 50vh;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.popup-content-wrapper p {
+    line-height: 1.6;
+    color: #333;
+    font-size:1.6vw;
+
+}
+
+/* Popup Title */
+#popup-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+    padding-right: 40px; /* Make space for close button */
+}
+
+
+/* Background Gradient */
+.gradient-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, aqua, black);
+    transition: background 0.3s ease;
+    z-index: -1;
+}
+
+.corners a {
+    position: absolute;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    pointer-events: auto;
+    padding: 10px;
+    transition: transform 0.3s ease;
+}
+
+#socialsdescr {
+    bottom: 10px;
+    left:10px;
+    cursor: pointer;
+}
+
+#scroll-hint {
+    top: 40px;
+    left: 40px;
+    pointer-events: none;
+}
+
+
+#contact:hover,
+#bio:hover {
+    transform: scale(1.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: scale(0.9); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+}
+
+
+
+
+.bio-content {
+    margin-top: clamp(0.8rem, 2vw, 1rem);
+    line-height: 1.6;
+    /* Responsive font size that scales with viewport width */
+    font-size: clamp(0.875rem, 2.5vw, 1.1rem);
+    /* Add some breathing room on smaller screens */
+    padding: clamp(0.5rem, 1vw, 1rem);
+    align-content: center;
+}
+
+.popup-content h2 {
+    margin-top: 0;
+    color: rgb(0, 0, 0);
+    font-size: clamp(1.8rem, 9vw, 1.5rem);
+    margin-bottom: clamp(0.8rem, 2vw, 1rem);
+    align-self: auto;
+    position: relative;
+    left: 1.6vw;
+}
+/* Media queries for additional refinements */
+@media screen and (max-width: 480px) {
+    .popup-content {
+    width: 90%;
+    }
+
+    .bio-content {
+        line-height: 1.4;
+    }
+    #popup-content {
+        align-self: center;
+    }
+}
+
+@media (max-width: 1200px) {
+
+    .scene {
+        width: 20vw;
+    }
+
+    .popup-content {
+        width: 80vw;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+    }
+    #popup-content {
+        align-self: center;
+    }
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card {
+        width:20vw;
+        height:25vh;
+    }
+
+    .scene {
+        transform: scale(.4) translateX(710px);
+    }
+
+.popup-content-wrapper{
+    max-width: 70vw;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+    .popup-content {
+        width: 85%;
+        height: 80%;
+        margin: 5% auto;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .popup-content p {
+    font-size: calc(1em - 1vh)
+    }
+
+   #popup-title {
+        font-size:  calc(1.5em - 1vh);
+        margin-bottom: 0;
+    }
+
+    .social-links a {
+        font-size: 11px;
+    }
+
+    #popup-content {
+        align-self: center;
+
+    }
+}
