@@ -101,22 +101,16 @@ body {
     justify-content: center;
 }
 
-/* Popup Content - Centered positioning */
 .popup-content {
-    position: relative;
-    width: 80%;
-    max-width: 90vw;
+    width: 90%;
+    max-width: 1400px;
+    margin: 20px auto;
     background: #fff;
-    padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    animation: fadeIn .8s;
-    /* Remove margin since we're using flexbox centering */
-    margin: 0;
-    /* Add max-height to ensure it doesn't overflow viewport */
+    overflow: hidden;
     max-height: 90vh;
-    overflow-y: auto;
 }
+
 /* Close Button */
 .close-button {
     position:fixed;
@@ -141,11 +135,12 @@ body {
 
 
 .popup-content-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-height:60vh;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
+
 
 .popup-content-wrapper iframe {
     width: 100%;
@@ -166,7 +161,6 @@ body {
 #popup-title {
     font-size: 24px;
     font-weight: 600;
-    margin-bottom: 20px;
     color: #333;
     padding-right: 40px; /* Make space for close button */
 }
@@ -241,7 +235,6 @@ body {
     margin-top: 0;
     color: rgb(0, 0, 0);
     font-size: clamp(1.8rem, 9vw, 1.5rem);
-    margin-bottom: clamp(0.8rem, 2vw, 1rem);
     align-self: auto;
     position: relative;
     left: 1.6vw;
@@ -262,10 +255,7 @@ body {
 
 @media (max-width: 1200px) {
 
-    .scene {
-        width: 20vw;
-    }
-
+  
     .popup-content {
         width: 80vw;
         justify-content: center;
@@ -285,41 +275,24 @@ body {
         height:25vh;
     }
 
-    .scene {
-        transform: scale(.4) translateX(710px);
+ 
+    .popup-content-wrapper {
+        padding: 10px;
     }
-
-.popup-content-wrapper{
-    max-width: 70vw;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-}
-
+    
     .popup-content {
-        width: 85%;
-        height: 80%;
-        margin: 5% auto;
-        justify-content: center;
-        display: flex;
-        flex-direction: column;
+        width: 95%;
+        margin: 10px auto;
     }
-
+}
     .popup-content p {
     font-size: calc(1em - 1vh)
     }
 
    #popup-title {
-        font-size:  calc(1.5em - 1vh);
-        margin-bottom: 0;
+        margin-top: 10px;
     }
 
     .social-links a {
         font-size: 11px;
     }
-
-    #popup-content {
-        align-self: center;
-
-    }
-}

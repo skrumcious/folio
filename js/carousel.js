@@ -3,14 +3,152 @@ class Carousel {
     constructor(element, cards) {
         this.element = element;
         this.cards = cards;
-        // Increase radius for a wider circle
-        this.radius = 620;
-        // Calculate angle between each card
+        this.baseRadius = 820; // Base radius for large screens
+        this.baseCardWidth = 400; // Base card width
+        this.baseCardHeight = 700; // Base card height
         this.theta = (2 * Math.PI) / cards.length;
         this.currentRotation = 0;
-        this.lastScrollTime = Date.now();    
-        this.setupCards();
-        this.setupControls();
+        this.lastScrollTime = Date.now();
+        
+
+     // Touch handling properties
+     this.touchStartX = 0;
+     this.touchStartY = 0;
+     this.isSwiping = false;
+     this.minSwipeDistance = 50; // Minimum distance for a swipe to register
+     
+
+ // Pinch handling properties
+ this.currentScale = 1;
+ this.initialPinchDistance = 0;
+ this.isPinching = false;
+ this.minScale = 0.5;
+ this.maxScale = 2.0;
+
+     // Initial setup
+     this.updateViewportDimensions();
+     this.setupCards();
+     this.setupControls();
+     this.setupTouchControls(); // New touch controls setup
+     
+     // Add resize listener with debounce
+     let resizeTimeout;
+     window.addEventListener('resize', () => {
+         clearTimeout(resizeTimeout);
+         resizeTimeout = setTimeout(() => {
+             this.updateViewportDimensions();
+             this.updateCarouselScale();
+             this.repositionCards();
+         }, 100);
+     });
+ }
+
+ // Calculate distance between two touch points
+ getPinchDistance(touches) {
+     return Math.hypot(
+         touches[0].clientX - touches[1].clientX,
+         touches[0].clientY - touches[1].clientY
+     );
+ }
+
+ // Add new touch control setup method
+ setupTouchControls() {
+    this.element.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+            // Initialize pinch
+            this.isPinching = true;
+            this.initialPinchDistance = this.getPinchDistance(e.touches);
+            this.isSwiping = false;
+        } else if (e.touches.length === 1) {
+            // Initialize swipe
+            this.touchStartX = e.touches[0].clientX;
+            this.touchStartY = e.touches[0].clientY;
+            this.isSwiping = true;
+            this.isPinching = false;
+        }
+    }, { passive: true });
+
+    this.element.addEventListener('touchmove', (e) => {
+        if (this.isPinching && e.touches.length === 2) {
+            e.preventDefault();
+            
+            // Calculate new scale
+            const currentDistance = this.getPinchDistance(e.touches);
+            const scaleDelta = currentDistance / this.initialPinchDistance;
+            let newScale = this.currentScale * scaleDelta;
+            
+            // Clamp scale within bounds
+            newScale = Math.min(Math.max(newScale, this.minScale), this.maxScale);
+            
+            // Apply the scale transform while maintaining other transformations
+            this.applyTransform(newScale);
+            
+        } else if (this.isSwiping && e.touches.length === 1) {
+            const touchEndX = e.touches[0].clientX;
+            const touchEndY = e.touches[0].clientY;
+            const deltaX = touchEndX - this.touchStartX;
+            const deltaY = touchEndY - this.touchStartY;
+            
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                e.preventDefault();
+            }
+        }
+    }, { passive: false });
+
+    this.element.addEventListener('touchend', (e) => {
+        if (this.isPinching) {
+            const transforms = new DOMMatrix(getComputedStyle(this.element).transform);
+            this.currentScale = transforms.a;
+            this.isPinching = false;
+        } else if (this.isSwiping && e.changedTouches.length === 1) {
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            const deltaX = touchEndX - this.touchStartX;
+            const deltaY = touchEndY - this.touchStartY;
+            if (Math.abs(deltaX) > this.minSwipeDistance && Math.abs(deltaX) > Math.abs(deltaY)) {
+                const direction = deltaX > 0 ? -1 : 1;
+                this.rotate(direction);
+            }
+            this.isSwiping = false;
+        }
+    }, { passive: true });
+}
+
+updateViewportDimensions() {
+    this.viewport = {
+        width: window.innerWidth,
+        height: window.innerHeight
+    };
+
+    const viewportScale = Math.min(this.viewport.width, this.viewport.height) / 1920;
+    this.radius = Math.min(this.baseRadius, this.baseRadius * viewportScale * 1.2);
+
+    const cardScale = Math.min(
+        1,
+        (this.viewport.width / 1920),
+        (this.viewport.height / 1080)
+    );
+
+    this.cardSize = {
+        width: this.baseCardWidth * cardScale * 0.8,
+        height: this.baseCardHeight * cardScale * 0.8
+    };
+}
+
+
+    updateCarouselScale() {
+        // Calculate overall carousel scale
+        const carouselScale = Math.min(
+            1.3,
+            (this.viewport.width * 1) / (this.radius * 1),
+            (this.viewport.height * 1) / (this.radius * 1)
+        );
+        
+        this.element.style.transform = `
+            scale(${carouselScale}) 
+            rotateX(-10deg) 
+            rotateY(${this.currentRotation}rad)
+        `;
     }
 
     setupCards() {
@@ -19,28 +157,144 @@ class Carousel {
             element.className = 'card';
             element.innerHTML = `<img src="${card.imageUrl}" alt="${card.title}" loading="lazy">`;
             
-            // Calculate position on the circle
-            const angle = this.theta * i;
-            // Use sine and cosine for x and z coordinates to create circular positioning
-            const x = this.radius * Math.sin(angle);
-            const z = this.radius * Math.cos(angle);
-            
-            element.style.transform = `
+            this.positionCard(element, i);
+            element.addEventListener('click', () => this.showPopup(card));
+            this.element.appendChild(element);
+        });
+    }
+
+        positionCard(element, index) {
+        const angle = this.theta * index;
+        const x = this.radius * Math.sin(angle);
+        const z = this.radius * Math.cos(angle);
+        
+        // Adjust the card positioning to maintain consistent gaps
+        const cardScale = Math.min(
+            1,
+            this.cardSize.width / this.baseCardWidth,
+            this.cardSize.height / this.baseCardHeight
+        );
+        
+        element.style.transform = `
             translate(-50%, -50%)
             translate3d(${x}px, 0, ${z}px)
             rotateY(${angle}rad)
+            scale(${cardScale})
         `;
+        
+        // Set base size
+        element.style.width = `${this.baseCardWidth}px`;
+        element.style.height = `${this.baseCardHeight}px`;
+    }
 
-        element.addEventListener('click', () => this.showPopup(card));
-            this.element.appendChild(element);
+    repositionCards() {
+        const cards = this.element.querySelectorAll('.card');
+        cards.forEach((card, i) => this.positionCard(card, i));
+    }
+
+    showPopup(card) {
+        const popup = document.querySelector('.popup-overlay');
+        const title = document.getElementById('popup-title');
+        const content = document.getElementById('popup-content');
+        
+        // Clear existing content
+        content.innerHTML = '';
+        title.textContent = card.title;
+        
+        // Create responsive wrapper
+        const wrapper = document.createElement('div');
+        wrapper.className = 'popup-content-wrapper';
+        
+        // Handle video content
+        if (card.videoUrl) {
+            const videoContainer = document.createElement('div');
+            videoContainer.style.cssText = `
+                position: relative;
+                width: 100%;
+                padding-top: 45.25%; /* 16:9 Aspect ratio */
+            `;
+            
+            let videoEmbed;
+            if (card.videoUrl.includes('youtube.com') || card.videoUrl.includes('youtu.be')) {
+                const videoId = card.videoUrl.includes('youtube.com') 
+                    ? card.videoUrl.split('v=')[1]?.split('&')[0]
+                    : card.videoUrl.split('youtu.be/')[1];
+                videoEmbed = document.createElement('iframe');
+                videoEmbed.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                videoEmbed.allow = 'autoplay; encrypted-media; picture-in-picture';
+            } else if (card.videoUrl.includes('vimeo.com')) {
+                const videoId = card.videoUrl.split('vimeo.com/')[1];
+                videoEmbed = document.createElement('iframe');
+                videoEmbed.src = `https://player.vimeo.com/video/${videoId}?autoplay=1`;
+                videoEmbed.allow = 'autoplay; fullscreen; picture-in-picture';
+            } else {
+                videoEmbed = document.createElement('video');
+                videoEmbed.src = card.videoUrl;
+                videoEmbed.controls = true;
+                videoEmbed.autoplay = true;
+            }
+            
+            videoEmbed.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+                border-radius: 8px;
+            `;
+            
+            videoContainer.appendChild(videoEmbed);
+            wrapper.appendChild(videoContainer);
+        }
+        
+        // Add description with responsive text
+        const description = document.createElement('p');
+        description.textContent = card.description;
+        description.style.cssText = `
+            font-size: clamp(14px, 2vw, 18px);
+            line-height: 1.6;
+            margin-top: 20px;
+            max-width: 80ch;
+            margin: 0 auto;
+        `;
+        
+        wrapper.appendChild(description);
+        content.appendChild(wrapper);
+        
+        // Show popup
+        popup.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        // Setup close functionality
+        this.setupPopupClose(popup, content);
+    }
+
+    setupPopupClose(popup, content) {
+        const closePopup = () => {
+            popup.style.display = 'none';
+            document.body.style.overflow = '';
+            content.innerHTML = '';
+        };
+        
+        const closeButton = popup.querySelector('.close-button');
+        closeButton.onclick = closePopup;
+        popup.onclick = (e) => {
+            if (e.target === popup) closePopup();
+        };
+        
+        window.addEventListener('keydown', function handler(e) {
+            if (e.key === 'Escape') {
+                closePopup();
+                window.removeEventListener('keydown', handler);
+            }
         });
     }
 
     rotate(direction) {
         this.currentRotation += direction * (this.theta / 2);
-        this.element.style.transform = `rotateX(-10deg) rotateY(${this.currentRotation}rad)`;
+        this.updateCarouselScale();
     }
-
 
     setupControls() {
         window.addEventListener('wheel', (e) => {
@@ -55,107 +309,7 @@ class Carousel {
             
         }, { passive: false });
     }
-
- // Update the showPopup method in the Carousel class
-showPopup(card) {
-    const popup = document.querySelector('.popup-overlay');
-    const title = document.getElementById('popup-title');
-    const content = document.getElementById('popup-content');
-    
-    while (content.firstChild) {
-        content.removeChild(content.firstChild);
-    }
-
-        title.textContent = card.title;
-        
-        // Create content wrapper
-        const wrapper = document.createElement('div');
-        wrapper.className = 'popup-content-wrapper';
-        
-        // Add video 
-        if (card.videoUrl) {
-            let videoEmbed;
-            
-            // YouTube URL handling
-            if (card.videoUrl.includes('youtube.com') || card.videoUrl.includes('youtu.be')) {
-                const videoId = card.videoUrl.includes('youtube.com') 
-                    ? card.videoUrl.split('v=')[1]?.split('&')[0]
-                    : card.videoUrl.split('youtu.be/')[1];
-                videoEmbed = document.createElement('iframe');
-                videoEmbed.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                videoEmbed.allow = 'autoplay; encrypted-media; picture-in-picture';
-                videoEmbed.allowFullscreen = true;
-            
-            // Vimeo URL handling
-            } else if (card.videoUrl.includes('vimeo.com')) {
-                const videoId = card.videoUrl.split('vimeo.com/')[1];
-                videoEmbed = document.createElement('iframe');
-                videoEmbed.src = `https://player.vimeo.com/video/${videoId}`;
-                videoEmbed.allow = 'autoplay; fullscreen; picture-in-picture';
-                videoEmbed.allowFullscreen = true;
-    
-            // Local video file handling
-            } else {
-                videoEmbed = document.createElement('video');
-                videoEmbed.src = card.videoUrl;
-                videoEmbed.controls = true;
-                videoEmbed.autoplay = true;
-            }
-    
-            // Styling for video         
-            wrapper.appendChild(videoEmbed);
-        }
-    
-        // Add image if no video URL is provided
-        if (!card.videoUrl && card.imageUrl) {
-            const img = document.createElement('img');
-            img.src = card.imageUrl;
-            img.alt = card.title;
-            wrapper.appendChild(img);
-        }
-
-        
-        // Add description
-        const description = document.createElement('p');
-        description.textContent = card.description;
-        wrapper.appendChild(description);
-        
-
-        
-        // Add wrapper to content
-        content.appendChild(wrapper);
-        
-        // Show popup
-        popup.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        
-        // Setup close functionality
-        const closeButton = popup.querySelector('.close-button');
-        const closePopup = () => {
-            popup.style.display = 'none';
-            document.body.style.overflow = ''; // Restore scrolling
-            
-            // Remove the video content to stop playback
-            while (content.firstChild) {
-                content.removeChild(content.firstChild);
-            }
-        };
-        closeButton.onclick = closePopup;
-        popup.onclick = (e) => {
-            if (e.target === popup) closePopup();
-        };
-        
-        // Add escape key listener
-        const escapeHandler = (e) => {
-            if (e.key === 'Escape') {
-                closePopup();
-                window.removeEventListener('keydown', escapeHandler);
-            }
-        };
-        window.addEventListener('keydown', escapeHandler);
-    }
 }
-
 // app.js - Application initialization
 const cardData = [
     {
