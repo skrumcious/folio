@@ -217,7 +217,7 @@ updateViewportDimensions() {
             let videoEmbed;
             if (card.videoUrl.includes('youtube.com') || card.videoUrl.includes('youtu.be')) {
                 const videoId = card.videoUrl.includes('youtube.com') 
-                    ? card.videoUrl.split('v=')[1]?.split('&')[0]
+                    ? card.videoUrl.split('v=')[1]?.split('&')[0] 
                     : card.videoUrl.split('youtu.be/')[1];
                 videoEmbed = document.createElement('iframe');
                 videoEmbed.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
@@ -246,11 +246,35 @@ updateViewportDimensions() {
             
             videoContainer.appendChild(videoEmbed);
             wrapper.appendChild(videoContainer);
+
+        } else {
+            const imageContainer = document.createElement('div');
+            imageContainer.style.cssText = `
+                position: relative;
+                width: 100%;
+                padding-top: 56.25%; /* 16:9 Aspect ratio */
+            `;
+            
+            const imageEmbed = document.createElement('img');
+            imageEmbed.src = card.imageUrl;
+            imageEmbed.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                border-radius: 8px;
+            `;
+            
+            imageContainer.appendChild(imageEmbed);
+            wrapper.appendChild(imageContainer);
         }
-        
-        // Add description with responsive text
+    
         const description = document.createElement('p');
-        description.textContent = card.description;
+        const descriptionText = card.description.replace('@isaacprease', '<a href="https://www.instagram.com/isaacprease/" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;">@isaacprease</a>').replace('Angel Quan', '<a href="https://www.instagram.com/by.4ng3l.q/" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;">Angel Quan</a>');
+        description.innerHTML = descriptionText;
+        
         description.style.cssText = `
             font-size: clamp(14px, 2vw, 18px);
             line-height: 1.6;
@@ -337,16 +361,16 @@ const cardData = [
         imageUrl: "/folio/images/img4_.png"
       },
       {
-        title: "Project 5",
-        description: "Project 5 combines aesthetic appeal with practical utility. Describe the key features and benefits of this project.",
-        videoUrl: "/folio/images/video5.mp4",
+        title: "by.4ng3l.q - Knitwear Promotional Edit",
+        description: "Burst shooting style edit featuring the 'distressed skirt & spare ribs hoodie' by Angel Quan",
+        videoUrl: "https://www.youtu.be/tUo1mxKoVN8",
         imageUrl: "/folio/images/img5_.png"
       },
       {
-        title: "Project 6",
-        description: "Project 6 pushes boundaries in interactive design. Detail the innovative approaches and technologies used here.",
-        videoUrl: "/folio/images/video6.mp4",
-        imageUrl: "/folio/images/img6_.png"
+        title: "White - Isaacprease: Cover art and visualiser",
+        description: "Collaboration with Singapore based musician @isaacprease. I 3D modelled and textured a floating disassembled watch from scratch which I then lit and animated in Maya. Then in Photoshop I made my first ever piece of cover art.",
+        //videoUrl: "/folio/images/video6.mp4",
+        imageUrl: "/folio/images/isaaccoverart_.png"
       },
       {
         title: "Everything is layers",
@@ -355,9 +379,9 @@ const cardData = [
         imageUrl: "/folio/images/img7_.png"
       },
       {
-        title: "Anomaly.exe",
-        description: "A part of the Overthought 2100 worldbuilding project, Anomoly.exe is a rebellious organisation that is one of ",
-        videoUrl: "/folio/images/video8.mp4",
+        title: "Vision Street Wear China - 2024 Fall Promotional",
+        description: "Showing of the freshest from Vision Street Wear's 2024 fall/winter collection.",
+        videoUrl: "https://youtu.be/k3Yf_-AssuU",
         imageUrl: "/folio/images/img8_.png"
       }
 
