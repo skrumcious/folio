@@ -15,7 +15,8 @@ class Carousel {
      this.touchStartX = 0;
      this.touchStartY = 0;
      this.isSwiping = false;
-     this.minSwipeDistance = 50; // Minimum distance for a swipe to register
+     this.minSwipeDistance = 40;
+     this.rotationSpeed = 1.5; // Added rotation speed multiplier
      
 
  // Pinch handling properties
@@ -106,8 +107,9 @@ class Carousel {
             const deltaX = touchEndX - this.touchStartX;
             const deltaY = touchEndY - this.touchStartY;
             if (Math.abs(deltaX) > this.minSwipeDistance && Math.abs(deltaX) > Math.abs(deltaY)) {
-                const direction = deltaX > 0 ? -1 : 1;
-                this.rotate(direction);
+                // Reversed the direction logic and added speed multiplier
+                const direction = deltaX > 0 ? 1 : -1;
+                this.rotate(direction * this.rotationSpeed);
             }
             this.isSwiping = false;
         }
@@ -316,9 +318,17 @@ updateViewportDimensions() {
     }
 
     rotate(direction) {
+        // Smoother rotation transition
         this.currentRotation += direction * (this.theta / 2);
+        this.element.style.transition = 'transform 0.3s ease-out';
         this.updateCarouselScale();
+        
+        // Reset transition after animation
+        setTimeout(() => {
+            this.element.style.transition = '';
+        }, 300);
     }
+
 
     setupControls() {
         window.addEventListener('wheel', (e) => {
