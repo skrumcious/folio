@@ -350,49 +350,49 @@ const cardData = [
         title: "Overthought 2100",
         description: "Overthought 2100 is a speculative future of the west. Visualized through live footage with 3d model compositing and VFX. With the way we see 'free speech and expression' being affected in the past decade or two in reality, for better or worse, we can imagine what the world would look like if we went so far left that we reach authoritarian control of what's politically correct. A society where truly free thought has been phased out over 70 years through combining cancel culture/wokeness with harsh prosecution and capital punishment, followed by censorship of novels, philosophies, hate groups, and any expression that reinforces or spreads topics of controversy. This is a detailed description for Project 1. You can add specific details about the project, technologies used, and outcomes achieved.",
         videoUrl: "https://vimeo.com/1021344781?share=copy",
-        imageUrl: "./images.img1_.png"
+        imageUrl: "./images/img1_.png"
       },
       {
         title: "Barbican Expansion",
         description: "Filmed at the Barbican Centre in London, short form content for socials.",
-        videoUrl: "./images.video2.mp4",
-        imageUrl: "./images.img2_.png"
+        videoUrl: "./images/video2.mp4",
+        imageUrl: "./images/img2_.png"
       },
       {
         title: "CCTV: Commonly Confused Tracking Visuals",
         description: "oo the classic red motion/facial tracking square! Do you hate being tracked? It’s your lucky day because now you can rest assured knowing that you’re not as important as you may think and unless you threaten public safety or the state you’ll be fine!!! :)",
-        videoUrl: "./images.video3.mp4",
-        imageUrl: "./images.img3_.png"
+        videoUrl: "./images/video3.mp4",
+        imageUrl: "./images/img3_.png"
       },
       {
         title: "Video: The Consumer Medium",
         description: "Video content is being consumed more than ever as we see apps like Instagram and Facebook following TikTok's lead in promoting short video content as the standard. Immeasurable variety of content. Viral is no longer a word of any substance. We are now able to consume more content, more frequently, with more variety, than ever before. This is the current state of video, take a few minutes to observe the madness of it, bask in its absurdity. Acknowledge your ability to consume a style of video before and after forms that're wildly different ---- or feel free to continue scrolling.",
         videoUrl: "https://youtu.be/HoLc3T0ftzU",
-        imageUrl: "./images.img4_.png"
+        imageUrl: "./images/img4_.png"
       },
       {
         title: "by.4ng3l.q - Knitwear Promotional Edit",
         description: "Burst shooting style edit featuring the 'distressed skirt & spare ribs hoodie' by Angel Quan",
         videoUrl: "https://www.youtu.be/tUo1mxKoVN8",
-        imageUrl: "./images.img5_.png"
+        imageUrl: "./images/img5_.png"
       },
       {
         title: "White - Isaacprease: Cover art and visualiser",
         description: "Collaboration with Singapore based musician @isaacprease. I 3D modelled and textured a floating disassembled watch from scratch which I then lit and animated in Maya. Then in Photoshop I made my first ever piece of cover art.",
-        //videoUrl: "./images.video6.mp4",
-        imageUrl: "./images.isaaccoverart_.png"
+        //videoUrl: "./images/video6.mp4",
+        imageUrl: "./images/isaaccoverart_.png"
       },
       {
         title: "Everything is layers",
         description: "Short form video edit for socials, filmed at a neighbourhood centre in Suzhou, China",
         videoUrl: "https://youtu.be/xj5QK23z2cY",
-        imageUrl: "./images.img7_.png"
+        imageUrl: "./images/img7_.png"
       },
       {
         title: "Vision Street Wear China - 2024 Fall Promotional",
         description: "Showing of the freshest from Vision Street Wear's 2024 fall/winter collection.",
         videoUrl: "https://youtu.be/k3Yf_-AssuU",
-        imageUrl: "./images.img8_.png"
+        imageUrl: "./images/img8_.png"
       }
 
     // Add more cards as needed
