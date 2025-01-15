@@ -6,6 +6,16 @@
     <title>Rory Henderson - Multimedia Designer</title>
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="shortcut icon" href="#">
+    <script type="module">
+        import { Carousel, PreloadManager } from './js/preload-manager.js';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = new Carousel(
+                document.querySelector('.carousel'),
+                cardData
+            );
+        });
+    </script>
     <!-- EmailJS CDN -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
@@ -55,5 +65,6 @@
     <!-- Your other script imports -->
     <script type="module" src="./js/carousel.js"></script>
     <script type="module" src="./js/ContactForm.js"></script>
+
 </body>
 </html>
