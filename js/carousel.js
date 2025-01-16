@@ -320,7 +320,7 @@ updateViewportDimensions() {
     rotate(direction) {
         // Smoother rotation transition
         this.currentRotation += direction * (this.theta / 2);
-        this.element.style.transition = 'transform 0.3s ease-out';
+        this.element.style.transition = 'transform 0.8s ease-out';
         this.updateCarouselScale();
         
         // Reset transition after animation
