@@ -274,7 +274,10 @@ updateViewportDimensions() {
         }
     
         const description = document.createElement('p');
-        const descriptionText = card.description.replace('@isaacprease', '<a href="https://www.instagram.com/isaacprease/" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;">@isaacprease</a>').replace('Angel Quan', '<a href="https://www.instagram.com/by.4ng3l.q/" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;">Angel Quan</a>');
+        const descriptionText = card.description.replace('Angel Quan', '<a href="https://www.instagram.com/by.4ng3l.q/" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;">Angel Quan</a>')
+        .replace('Kyju', '<a href="https://open.spotify.com/artist/75Xl3gSfwXJIxqdvIPhHd4?si=YVQXx4yfTtS8cRcmGF8T9g" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;">Kyju</a>')
+        .replace('Jelex', '<a href="https://open.spotify.com/artist/6dhwyJ9zxV1cstuPoRv06s?si=PH7Yk8ygSVKapw7SjDJQDQtarget=" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;">Jelex</a>')
+        .replace('isaacprease', '<a href="https://open.spotify.com/artist/2Pa2Q2By2eVE6RT8SfgozN?si=KR9EfXzQRaGiG0UOyMqXXg" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;">isaacprease</a>');
         description.innerHTML = descriptionText;
         
         description.style.cssText = `
@@ -378,7 +381,7 @@ const cardData = [
       },
       {
         title: "White - Isaacprease: Cover art and visualiser",
-        description: "Collaboration with Singapore based musician @isaacprease. I 3D modelled and textured a floating disassembled watch from scratch which I then lit and animated in Maya. Then in Photoshop I made my first ever piece of cover art.",
+        description: "Collaboration with Singapore based musician isaacprease. I 3D modelled and textured a floating disassembled watch from scratch which I then lit and animated in Maya. Then in Photoshop I made my first ever piece of cover art.",
         //videoUrl: "./images/video6.mp4",
         imageUrl: "./images/isaaccoverart_.png"
       },
@@ -393,6 +396,12 @@ const cardData = [
         description: "Showing of the freshest from Vision Street Wear's 2024 fall/winter collection.",
         videoUrl: "https://youtu.be/k3Yf_-AssuU",
         imageUrl: "./images/img8_.png"
+      },
+      {
+        title: "WHERETHELIESHURT Music Video - Kyju with Jelex and IsaacPrease",
+        description: "Music video I shot and edited for Kyju, Jelex, and isaacprease. Unfortunately, the song and video were never released.",
+        videoUrl: "https://youtu.be/-FvfXAPngUs",
+        imageUrl: "./images/Kyju jelex mv card.png"
       }
 
     // Add more cards as needed
