@@ -362,16 +362,16 @@ const cardData = [
         imageUrl: "./images/img2_.png"
       },
       {
-        title: "CCTV: Commonly Confused Tracking Visuals",
-        description: "oo the classic red motion/facial tracking square! Do you hate being tracked? It’s your lucky day because now you can rest assured knowing that you’re not as important as you may think and unless you threaten public safety or the state you’ll be fine!!! :)",
+        title: "Avenue & Son 3D Motion graphic Logo Concept ",
+        description: "3D logo based on the face Avenue & Son's signature ring, animated, textured and lit.",
         videoUrl: "./images/video3.mp4",
         imageUrl: "./images/img3_.png"
       },
       {
-        title: "Video: The Consumer Medium",
-        description: "Video content is being consumed more than ever as we see apps like Instagram and Facebook following TikTok's lead in promoting short video content as the standard. Immeasurable variety of content. Viral is no longer a word of any substance. We are now able to consume more content, more frequently, with more variety, than ever before. This is the current state of video, take a few minutes to observe the madness of it, bask in its absurdity. Acknowledge your ability to consume a style of video before and after forms that're wildly different ---- or feel free to continue scrolling.",
-        videoUrl: "https://youtu.be/HoLc3T0ftzU",
-        imageUrl: "./images/img4_.png"
+        title: "MycoVision - App Concept Motion graphic (Barcelona Design Week 2024)",
+        description: "Mycelium - the 'roots' of fungi, absorbing and transporting nutrients from the environment. It plays a crucial role in various ecological processes, such as decomposition, nutrient cycling, and plant-fungal symbiotic relationships. In celebration of the crucial role of mycelium in the ecosystems, our team has used mycelium as the inspiration for our new idea - MycoVision. Team:Huynh Dung (Lily) - RMIT VN Thuy Mai (Sui) - RMIT VN Phuong Huynh - RMIT VN Rory Henderson - RMIT Melbourne https://www.commondesignstudio.net/post/mycovision",
+        videoUrl: "https://youtu.be/Z5QDRoCj0a0",
+        imageUrl: "./images/img4_.webp"
       },
       {
         title: "by.4ng3l.q - Knitwear Promotional Edit",
