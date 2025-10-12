@@ -157,7 +157,7 @@ updateViewportDimensions() {
         this.cards.forEach((card, i) => {
             const element = document.createElement('div');
             element.className = 'card';
-            element.innerHTML = `<img src="${card.imageUrl}" alt="${card.title}" loading="lazy">`;
+            element.innerHTML = `<img src="${card.imageUrl}" alt="${card.title}" loading="eager">`;
             
             this.positionCard(element, i);
             element.addEventListener('click', () => this.showPopup(card));
