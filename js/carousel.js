@@ -371,7 +371,7 @@ const cardData = [
         title: "MycoVision - App Concept Motion graphic (Barcelona Design Week 2024)",
         description: "Mycelium - the 'roots' of fungi, absorbing and transporting nutrients from the environment. It plays a crucial role in various ecological processes, such as decomposition, nutrient cycling, and plant-fungal symbiotic relationships. In celebration of the crucial role of mycelium in the ecosystems, our team has used mycelium as the inspiration for our new idea - MycoVision. Team:Huynh Dung (Lily) - RMIT VN Thuy Mai (Sui) - RMIT VN Phuong Huynh - RMIT VN Rory Henderson - RMIT Melbourne https://www.commondesignstudio.net/post/mycovision",
         videoUrl: "https://youtu.be/Z5QDRoCj0a0",
-        imageUrl: "./images/img4_.webp"
+        imageUrl: "./images/img4_.jpg"
       },
       {
         title: "by.4ng3l.q - Knitwear Promotional Edit",
